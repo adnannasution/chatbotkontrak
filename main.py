@@ -319,15 +319,7 @@ NILAI ENUM & PILIHAN YANG VALID:
 12. STATUS PURCHASE PADI (padi.status_purchase):
     - 'BAST' -> Berita Acara Serah Terima sudah dilakukan
 """
-- vendor.id_vendor -> kontrak.id_vendor (1 vendor banyak kontrak)
-- kontrak.id_kontrak -> tagihan.id_kontrak
-- kontrak.id_kontrak -> amandemen_kontrak.id_kontrak
-- kontrak.id_kontrak -> progress_lumpsum.id_kontrak
-- kontrak.id_kontrak -> progress_unit_price.id_kontrak
-- kontrak.id_kontrak -> monitoring_ltsa.id_kontrak
-- kontrak.id_kontrak -> dokumen_approval.id_kontrak
-- vendor.id_vendor -> padi.id_vendor
-"""
+
 
 BASE_SYSTEM_PROMPT = (
     "Kamu adalah asisten cerdas untuk sistem manajemen kontrak kilang minyak.\n"
