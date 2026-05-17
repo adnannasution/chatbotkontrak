@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, FileResponse  # tambah FileResponse
+from fastapi.staticfiles import StaticFiles  # tambah ini
 from pydantic import BaseModel
 import requests
 import psycopg2
@@ -15,12 +16,22 @@ from openpyxl.styles import Font, PatternFill, Alignment
 
 app = FastAPI(title="Refinery Contract Chatbot API")
 
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Static files & root route
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/")
+def root():
+    return FileResponse("static/index.html")
+    
 
 # ── Config ──────────────────────────────────────────────────────────────────
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:password@host:5432/railway")
