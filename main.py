@@ -30,13 +30,13 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 def root():
     return FileResponse("static/index.html")
 
-# ── Config ───────────────────────────────────────────────────────────────────
+# -- Config -------------------------------------------------------------------
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:password@host:5432/railway")
 DINOIKI_API_KEY = os.getenv("DINOIKI_API_KEY", "")
 DINOIKI_URL = "https://ai.dinoiki.com/v1/chat/completions"
 AI_MODEL = "gpt-4o"
 
-# ── Stopwords bahasa Indonesia ────────────────────────────────────────────────
+# -- Stopwords bahasa Indonesia ------------------------------------------------
 STOPWORDS = {
     'apa', 'siapa', 'berapa', 'yang', 'dan', 'atau', 'dari', 'untuk',
     'dengan', 'adalah', 'ini', 'itu', 'ada', 'tidak', 'bisa', 'mau',
@@ -48,7 +48,7 @@ STOPWORDS = {
     'kontrak', 'vendor', 'tagihan', 'dokumen', 'progress', 'bulan', 'tahun'
 }
 
-# ── Helper: call dinoiki AI ──────────────────────────────────────────────────
+# -- Helper: call dinoiki AI --------------------------------------------------
 def call_ai(messages: list, max_tokens: int = 1500) -> str:
     headers = {
         "Content-Type": "application/json",
@@ -65,7 +65,7 @@ def call_ai(messages: list, max_tokens: int = 1500) -> str:
     data = resp.json()
     return data["choices"][0]["message"]["content"].strip()
 
-# ── Dynamic Context Injection ─────────────────────────────────────────────────
+# -- Dynamic Context Injection -------------------------------------------------
 def smart_entity_search(user_message: str) -> str:
     """
     Cari entitas yang disebut user secara dinamis di database.
@@ -91,7 +91,7 @@ def smart_entity_search(user_message: str) -> str:
             if len(term) < 3:
                 continue
 
-            # ── Cari di tabel vendor ──────────────────────────────
+            # -- Cari di tabel vendor ------------------------------
             cur.execute("""
                 SELECT id_vendor, nama_vendor, status_vendor, score
                 FROM vendor
@@ -108,7 +108,7 @@ def smart_entity_search(user_message: str) -> str:
                         f"status={v[2]}, score={v[3]}"
                     )
 
-            # ── Cari di tabel kontrak ─────────────────────────────
+            # -- Cari di tabel kontrak -----------------------------
             cur.execute("""
                 SELECT k.id_kontrak, k.judul_kontrak, k.no_dokumen_kontrak,
                        k.direksi_pekerjaan, k.status_kontrak, k.tipe_kontrak,
@@ -132,7 +132,7 @@ def smart_entity_search(user_message: str) -> str:
                         f"status={k[4]}, tipe={k[5]}, vendor='{k[6]}'"
                     )
 
-            # ── Cari di tabel tagihan ─────────────────────────────
+            # -- Cari di tabel tagihan -----------------------------
             cur.execute("""
                 SELECT t.id_tagihan, t.nomor_tagihan, t.status_tagihan,
                        t.nilai_tagihan, k.judul_kontrak
@@ -151,7 +151,7 @@ def smart_entity_search(user_message: str) -> str:
                         f"status={t[2]}, nilai={t[3]}, kontrak='{t[4]}'"
                     )
 
-            # ── Cari di tabel padi ────────────────────────────────
+            # -- Cari di tabel padi --------------------------------
             cur.execute("""
                 SELECT p.id_padi, p.no_pembelian, p.judul_pembelian,
                        p.nilai, v.nama_vendor
@@ -185,7 +185,7 @@ def smart_entity_search(user_message: str) -> str:
         # Jangan crash jika search gagal, cukup return kosong
         return ""
 
-# ── DB Schema context untuk AI ───────────────────────────────────────────────
+# -- DB Schema context untuk AI -----------------------------------------------
 SCHEMA_CONTEXT = """
 Database PostgreSQL untuk sistem manajemen kontrak kilang minyak. Berikut skema tabel:
 
@@ -306,7 +306,7 @@ NILAI ENUM & PILIHAN YANG VALID:
     - 'Yes' -> SLA terpenuhi
     - 'No'  -> SLA tidak terpenuhi
 
-11. STATUS TAGIHAN (tagihan.status_tagihan) — mengikuti tahapan progress:
+11. STATUS TAGIHAN (tagihan.status_tagihan) - mengikuti tahapan progress:
     Tahap 1: Punchlist
     Tahap 2: BAST/BAPP
     Tahap 3: Pengajuan
@@ -329,49 +329,45 @@ NILAI ENUM & PILIHAN YANG VALID:
 - vendor.id_vendor -> padi.id_vendor
 """
 
-BASE_SYSTEM_PROMPT = f"""Kamu adalah asisten cerdas untuk sistem manajemen kontrak kilang minyak.
-Kamu dapat menjawab pertanyaan bisnis dalam bahasa Indonesia secara natural dan mengkonversinya ke query SQL PostgreSQL.
+BASE_SYSTEM_PROMPT = (
+    "Kamu adalah asisten cerdas untuk sistem manajemen kontrak kilang minyak.\n"
+    "Kamu dapat menjawab pertanyaan bisnis dalam bahasa Indonesia secara natural "
+    "dan mengkonversinya ke query SQL PostgreSQL.\n\n"
+    + SCHEMA_CONTEXT +
+    "\nATURAN KETAT:\n"
+    "1. HANYA boleh generate query SELECT, TIDAK boleh UPDATE, DELETE, INSERT, DROP, ALTER, TRUNCATE, dll\n"
+    "2. TIDAK boleh query SELECT * (tanpa kolom spesifik) - selalu tentukan kolom yang relevan\n"
+    "3. Selalu gunakan LIMIT maksimal 1000 baris\n"
+    "4. Gunakan JOIN yang tepat antar tabel\n"
+    "5. Format angka nilai kontrak dalam format Indonesia (Rp)\n"
+    "\nATURAN INTERPRETASI ENTITAS:\n"
+    '- Jika ada blok "KONTEKS ENTITAS YANG DITEMUKAN DI DATABASE" -> gunakan langsung, JANGAN minta klarifikasi\n'
+    "- Jika user menyebut nama yang diawali PT/CV/UD -> cari di vendor.nama_vendor\n"
+    "- Jika user menyebut kode seperti MA5, KOM-001, KTR-xxx -> cari di direksi_pekerjaan atau no_dokumen_kontrak\n"
+    "- Jika entitas tidak ditemukan di konteks -> baru boleh minta klarifikasi\n"
+    "\nFORMAT RESPONS JSON:\n"
+    "Kamu HARUS selalu merespons dalam format JSON seperti ini:\n"
+    "{\n"
+    '  "type": "query" | "clarification" | "narrative" | "error",\n'
+    '  "sql": "query SQL jika type=query",\n'
+    '  "explanation": "penjelasan dalam bahasa Indonesia apa yang akan dilakukan query ini",\n'
+    '  "narrative_hint": "bagaimana cara menarasikan hasilnya nanti",\n'
+    '  "chart_suggestion": null | "bar" | "line" | "pie" | "doughnut",\n'
+    '  "chart_config": null | {"x_column": "...", "y_column": "...", "label": "..."},\n'
+    '  "clarification_question": "pertanyaan klarifikasi jika type=clarification",\n'
+    '  "message": "pesan untuk user"\n'
+    "}\n"
+    "\nDETEKSI CHART:\n"
+    '- Jika pertanyaan menyebut "grafik", "chart", "trend", "perbandingan", "distribusi", "per bulan/tahun" -> suggest chart\n'
+    "- bar chart: perbandingan kategori (status, tipe, vendor)\n"
+    "- line chart: data time-series (per bulan, trend progress)\n"
+    "- pie/doughnut: distribusi persentase (status kontrak, tipe)\n"
+    "\nDETEKSI TABEL:\n"
+    "- Jika hasil query berpotensi >5 baris dan multi-kolom -> akan ditampilkan tabel\n"
+    "- Jika hanya 1-2 nilai -> tampilkan sebagai narasi saja\n"
+)
 
-{SCHEMA_CONTEXT}
-
-ATURAN KETAT:
-1. HANYA boleh generate query SELECT, TIDAK boleh UPDATE, DELETE, INSERT, DROP, ALTER, TRUNCATE, dll
-2. TIDAK boleh query SELECT * (tanpa kolom spesifik) - selalu tentukan kolom yang relevan
-3. Selalu gunakan LIMIT maksimal 1000 baris
-4. Gunakan JOIN yang tepat antar tabel
-5. Format angka nilai kontrak dalam format Indonesia (Rp)
-
-ATURAN INTERPRETASI ENTITAS:
-- Jika ada blok "KONTEKS ENTITAS YANG DITEMUKAN DI DATABASE" -> gunakan langsung, JANGAN minta klarifikasi
-- Jika user menyebut nama yang diawali PT/CV/UD -> cari di vendor.nama_vendor
-- Jika user menyebut kode seperti MA5, KOM-001, KTR-xxx -> cari di direksi_pekerjaan atau no_dokumen_kontrak
-- Jika entitas tidak ditemukan di konteks -> baru boleh minta klarifikasi
-
-FORMAT RESPONS JSON:
-Kamu HARUS selalu merespons dalam format JSON seperti ini:
-{{
-  "type": "query" | "clarification" | "narrative" | "error",
-  "sql": "query SQL jika type=query",
-  "explanation": "penjelasan dalam bahasa Indonesia apa yang akan dilakukan query ini",
-  "narrative_hint": "bagaimana cara menarasikan hasilnya nanti",
-  "chart_suggestion": null | "bar" | "line" | "pie" | "doughnut",
-  "chart_config": null | {{"x_column": "...", "y_column": "...", "label": "..."}},
-  "clarification_question": "pertanyaan klarifikasi jika type=clarification",
-  "message": "pesan untuk user"
-}}
-
-DETEKSI CHART:
-- Jika pertanyaan menyebut "grafik", "chart", "trend", "perbandingan", "distribusi", "per bulan/tahun" -> suggest chart
-- bar chart: perbandingan kategori (status, tipe, vendor)
-- line chart: data time-series (per bulan, trend progress)
-- pie/doughnut: distribusi persentase (status kontrak, tipe)
-
-DETEKSI TABEL:
-- Jika hasil query berpotensi >5 baris dan multi-kolom -> akan ditampilkan tabel
-- Jika hanya 1-2 nilai -> tampilkan sebagai narasi saja
-"""
-
-# ── Models ────────────────────────────────────────────────────────────────────
+# -- Models --------------------------------------------------------------------
 class ChatRequest(BaseModel):
     message: str
     history: list = []
@@ -380,7 +376,7 @@ class DownloadRequest(BaseModel):
     sql: str
     filename: str = "data_export"
 
-# ── DB Connection ─────────────────────────────────────────────────────────────
+# -- DB Connection -------------------------------------------------------------
 def get_db_connection():
     try:
         conn = psycopg2.connect(DATABASE_URL)
@@ -388,7 +384,7 @@ def get_db_connection():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Database connection failed: {str(e)}")
 
-# ── SQL Validator ─────────────────────────────────────────────────────────────
+# -- SQL Validator -------------------------------------------------------------
 def validate_sql(sql: str) -> tuple[bool, str]:
     sql_upper = sql.upper().strip()
 
@@ -409,7 +405,7 @@ def validate_sql(sql: str) -> tuple[bool, str]:
 
     return True, sql
 
-# ── Execute Query ─────────────────────────────────────────────────────────────
+# -- Execute Query -------------------------------------------------------------
 def execute_query(sql: str) -> tuple[list, list]:
     valid, result = validate_sql(sql)
     if not valid:
@@ -430,7 +426,7 @@ def execute_query(sql: str) -> tuple[list, list]:
     finally:
         conn.close()
 
-# ── Generate Narrative ────────────────────────────────────────────────────────
+# -- Generate Narrative --------------------------------------------------------
 def generate_narrative(data: list, columns: list, original_question: str, narrative_hint: str) -> str:
     if not data:
         return "Tidak ditemukan data yang sesuai dengan pertanyaan Anda."
@@ -459,7 +455,7 @@ def generate_narrative(data: list, columns: list, original_question: str, narrat
 
     return ""
 
-# ── Chat Endpoint ─────────────────────────────────────────────────────────────
+# -- Chat Endpoint -------------------------------------------------------------
 @app.post("/api/chat")
 async def chat(req: ChatRequest):
     # 1. Cari entitas yang disebut user di database secara dinamis
@@ -598,7 +594,7 @@ async def chat(req: ChatRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# ── Download Excel ────────────────────────────────────────────────────────────
+# -- Download Excel ------------------------------------------------------------
 @app.post("/api/download")
 async def download_excel(req: DownloadRequest):
     data, columns = execute_query(req.sql)
