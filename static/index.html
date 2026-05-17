@@ -5,300 +5,339 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RCMS Intelligence — Refinery Contract AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-/* ═══════════════════════════════════════════════════════════════
-   TOKENS & RESET
-═══════════════════════════════════════════════════════════════ */
 :root {
-  --black:    #0a0a0a;
-  --black2:   #111111;
-  --black3:   #1a1a1a;
-  --black4:   #222222;
-  --black5:   #2d2d2d;
-  --grey1:    #3d3d3d;
-  --grey2:    #555555;
-  --grey3:    #888888;
-  --grey4:    #aaaaaa;
-  --grey5:    #cccccc;
-  --white:    #f5f5f0;
-  --white2:   #e8e8e3;
-  --white3:   #d0d0cc;
-  --accent:   #e8e0c8;      /* warm cream accent */
-  --accent2:  #c8d8e0;      /* cool blue-grey */
-  --error:    #c84b4b;
-  --success:  #4b8c4b;
-  --warn:     #c89640;
-  --font-display: 'Syne', sans-serif;
-  --font-body:    'DM Sans', sans-serif;
-  --font-mono:    'DM Mono', monospace;
-  --radius:   6px;
-  --radius-lg:12px;
-  --trans:    all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --navy:       #1a2744;
+  --navy2:      #243058;
+  --navy3:      #2e3d6e;
+  --navy-light: #3b4f8a;
+  --blue:       #4169c8;
+  --blue-light: #5a80e0;
+  --sky:        #e8eef8;
+  --sky2:       #d4dff5;
+  --white:      #ffffff;
+  --grey1:      #f0f3fa;
+  --grey2:      #e2e8f4;
+  --grey3:      #b8c4d8;
+  --grey4:      #8896b0;
+  --grey5:      #5a6a88;
+  --text:       #1a2744;
+  --text2:      #3a4a6a;
+  --text3:      #5a6a88;
+  --green:      #22c55e;
+  --green-bg:   #f0fdf4;
+  --green-bdr:  #bbf7d0;
+  --amber:      #f59e0b;
+  --amber-bg:   #fffbeb;
+  --amber-bdr:  #fde68a;
+  --red:        #ef4444;
+  --red-bg:     #fef2f2;
+  --red-bdr:    #fecaca;
+  --purple:     #8b5cf6;
+  --purple-bg:  #f5f3ff;
+  --shadow-sm:  0 1px 3px rgba(26,39,68,0.08), 0 1px 2px rgba(26,39,68,0.04);
+  --shadow:     0 4px 16px rgba(26,39,68,0.10), 0 2px 6px rgba(26,39,68,0.06);
+  --shadow-lg:  0 12px 40px rgba(26,39,68,0.14), 0 4px 12px rgba(26,39,68,0.08);
+  --radius-sm:  8px;
+  --radius:     12px;
+  --radius-lg:  18px;
+  --radius-xl:  24px;
+  --font:       'Plus Jakarta Sans', sans-serif;
+  --font-mono:  'JetBrains Mono', monospace;
+  --trans:      all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
   height: 100%;
-  background: var(--black);
-  color: var(--white);
-  font-family: var(--font-body);
+  background: var(--grey1);
+  color: var(--text);
+  font-family: var(--font);
   font-size: 14px;
   line-height: 1.6;
   overflow: hidden;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   LAYOUT
-═══════════════════════════════════════════════════════════════ */
+/* ═══ LAYOUT ════════════════════════════════════════════════════ */
 .app {
   display: grid;
-  grid-template-columns: 260px 1fr;
-  grid-template-rows: 100vh;
+  grid-template-columns: 280px 1fr;
   height: 100vh;
 }
 
-/* ── SIDEBAR ──────────────────────────────────────────────────── */
+/* ═══ SIDEBAR ════════════════════════════════════════════════════ */
 .sidebar {
-  background: var(--black2);
-  border-right: 1px solid var(--black5);
+  background: var(--navy);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  position: relative;
-}
-
-.sidebar::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--grey1), transparent);
 }
 
 .sidebar-logo {
-  padding: 28px 22px 20px;
-  border-bottom: 1px solid var(--black5);
+  padding: 28px 24px 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.logo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 6px 12px 6px 8px;
+  margin-bottom: 14px;
+}
+
+.logo-icon {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, var(--blue-light), var(--blue));
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.logo-badge span {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.5px;
 }
 
 .sidebar-logo h1 {
-  font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
+  color: #fff;
   letter-spacing: -0.5px;
-  color: var(--white);
   line-height: 1.2;
+  margin-bottom: 4px;
 }
 
-.sidebar-logo span {
-  font-family: var(--font-mono);
+.sidebar-logo p {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 400;
+}
+
+/* Sidebar nav */
+.sidebar-nav {
+  padding: 20px 16px 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.nav-label {
   font-size: 10px;
-  color: var(--grey3);
-  letter-spacing: 2px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  display: block;
-  margin-top: 4px;
+  color: rgba(255,255,255,0.3);
+  padding: 0 8px;
+  margin-bottom: 8px;
+  margin-top: 16px;
 }
 
-.sidebar-logo .version-badge {
-  display: inline-block;
-  background: var(--black4);
-  border: 1px solid var(--black5);
-  color: var(--grey4);
-  font-family: var(--font-mono);
-  font-size: 9px;
-  padding: 2px 7px;
-  border-radius: 20px;
-  margin-top: 10px;
-  letter-spacing: 1px;
-}
+.nav-label:first-child { margin-top: 0; }
 
-.sidebar-section {
-  padding: 16px 22px 8px;
-}
-
-.sidebar-section-label {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 2px;
-  color: var(--grey2);
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-.sidebar-btn {
+.nav-btn {
   width: 100%;
   background: none;
-  border: 1px solid var(--black5);
-  color: var(--grey4);
-  font-family: var(--font-body);
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-family: var(--font);
   font-size: 13px;
-  padding: 9px 12px;
-  border-radius: var(--radius);
+  font-weight: 500;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   text-align: left;
   transition: var(--trans);
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
+  gap: 10px;
+  margin-bottom: 2px;
 }
 
-.sidebar-btn:hover {
-  background: var(--black4);
-  border-color: var(--grey1);
-  color: var(--white);
+.nav-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
 }
 
-.sidebar-btn .btn-icon {
-  font-size: 14px;
-  opacity: 0.7;
+.nav-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.08);
 }
 
 /* Quick questions */
-.quick-questions {
-  padding: 0 22px;
-  flex: 1;
-  overflow-y: auto;
-}
-
 .quick-q {
-  border: 1px solid var(--black5);
-  border-radius: var(--radius);
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-sm);
   padding: 10px 12px;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   cursor: pointer;
   transition: var(--trans);
-  font-size: 12px;
-  color: var(--grey4);
-  line-height: 1.4;
+  text-align: left;
+  font-family: var(--font);
 }
 
 .quick-q:hover {
-  background: var(--black4);
-  border-color: var(--grey1);
-  color: var(--white);
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.18);
   transform: translateX(2px);
 }
 
-.quick-q strong {
-  display: block;
-  font-size: 10px;
-  font-family: var(--font-mono);
-  color: var(--grey2);
-  text-transform: uppercase;
+.quick-q-tag {
+  font-size: 9px;
+  font-weight: 700;
   letter-spacing: 1px;
-  margin-bottom: 3px;
+  text-transform: uppercase;
+  color: var(--blue-light);
+  margin-bottom: 2px;
 }
 
-/* Status indicator */
+.quick-q-text {
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.4;
+}
+
+/* Sidebar status */
 .sidebar-status {
-  padding: 16px 22px;
-  border-top: 1px solid var(--black5);
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
 }
 
 .status-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 11px;
-  color: var(--grey3);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
+
+.status-row:last-child { margin-bottom: 0; }
 
 .status-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: var(--success);
-  animation: pulse 2s infinite;
+  background: var(--green);
   flex-shrink: 0;
+  animation: pulse 2s infinite;
 }
 
-.status-dot.offline { background: var(--error); animation: none; }
+.status-dot.offline { background: var(--red); animation: none; }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 4px rgba(34,197,94,0); }
 }
 
-/* ── MAIN ─────────────────────────────────────────────────────── */
+.status-text {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+}
+
+/* ═══ MAIN ═══════════════════════════════════════════════════════ */
 .main {
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  background: var(--grey1);
 }
 
 /* Header */
 .main-header {
-  padding: 16px 28px;
-  border-bottom: 1px solid var(--black5);
-  background: var(--black);
+  padding: 18px 28px;
+  background: var(--white);
+  border-bottom: 1px solid var(--grey2);
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-left { display: flex; align-items: center; gap: 14px; }
+
+.header-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--navy), var(--navy3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.header-greeting {
+  font-size: 11px;
+  color: var(--text3);
+  font-weight: 400;
+  margin-bottom: 1px;
 }
 
 .header-title {
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--white2);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
   letter-spacing: -0.3px;
 }
 
-.header-subtitle {
-  font-size: 11px;
-  color: var(--grey3);
-  font-family: var(--font-mono);
-  margin-top: 1px;
-}
-
-.header-actions {
-  display: flex;
-  gap: 8px;
-}
+.header-actions { display: flex; gap: 8px; }
 
 .hdr-btn {
-  background: var(--black3);
-  border: 1px solid var(--black5);
-  color: var(--grey4);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 1px;
-  padding: 6px 12px;
-  border-radius: var(--radius);
+  background: var(--grey1);
+  border: 1px solid var(--grey2);
+  color: var(--text2);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: var(--trans);
-  text-transform: uppercase;
 }
 
 .hdr-btn:hover {
-  background: var(--black4);
-  border-color: var(--grey1);
-  color: var(--white);
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
 }
 
-/* ── MESSAGES ─────────────────────────────────────────────────── */
+/* ═══ MESSAGES ════════════════════════════════════════════════════ */
 .messages {
   flex: 1;
   overflow-y: auto;
   padding: 24px 28px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   scroll-behavior: smooth;
 }
 
-.messages::-webkit-scrollbar { width: 4px; }
+.messages::-webkit-scrollbar { width: 5px; }
 .messages::-webkit-scrollbar-track { background: transparent; }
-.messages::-webkit-scrollbar-thumb { background: var(--black5); border-radius: 2px; }
+.messages::-webkit-scrollbar-thumb { background: var(--grey2); border-radius: 3px; }
 
-/* Welcome state */
+/* Welcome */
 .welcome {
   display: flex;
   flex-direction: column;
@@ -306,80 +345,101 @@ html, body {
   justify-content: center;
   height: 100%;
   text-align: center;
-  padding: 40px;
-  animation: fadeUp 0.6s ease;
+  animation: fadeUp 0.5s ease;
+}
+
+.welcome-card {
+  background: var(--white);
+  border: 1px solid var(--grey2);
+  border-radius: var(--radius-xl);
+  padding: 48px 40px;
+  max-width: 480px;
+  box-shadow: var(--shadow);
 }
 
 .welcome-icon {
-  width: 64px;
-  height: 64px;
-  background: var(--black3);
-  border: 1px solid var(--black5);
-  border-radius: 16px;
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, var(--navy), var(--navy3));
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
-  margin-bottom: 20px;
+  font-size: 32px;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 24px rgba(26,39,68,0.25);
 }
 
-.welcome h2 {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: -1px;
-  color: var(--white);
+.welcome-card h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.5px;
   margin-bottom: 10px;
 }
 
-.welcome p {
-  color: var(--grey3);
-  max-width: 400px;
+.welcome-card p {
+  color: var(--text3);
   font-size: 13px;
   line-height: 1.7;
   margin-bottom: 6px;
 }
 
-.welcome-caps {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--grey2);
-  text-transform: uppercase;
-  margin-top: 16px;
+.welcome-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-/* Message bubbles */
+.welcome-chip {
+  background: var(--sky);
+  border: 1px solid var(--sky2);
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+/* ═══ MESSAGE BUBBLES ════════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .msg {
   display: flex;
   gap: 12px;
-  animation: fadeUp 0.3s ease;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+  animation: fadeUp 0.25s ease;
 }
 
 .msg.user { flex-direction: row-reverse; }
 
 .msg-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   flex-shrink: 0;
-  border: 1px solid var(--black5);
 }
 
-.msg.user .msg-avatar { background: var(--black4); }
-.msg.ai   .msg-avatar { background: var(--black3); }
+.msg.user .msg-avatar {
+  background: var(--navy);
+  color: #fff;
+}
 
-.msg-body { max-width: 80%; }
+.msg.ai .msg-avatar {
+  background: linear-gradient(135deg, var(--navy), var(--navy3));
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(26,39,68,0.2);
+}
 
+.msg-body { max-width: 78%; }
 .msg.user .msg-body { display: flex; flex-direction: column; align-items: flex-end; }
 
 .msg-bubble {
@@ -387,34 +447,40 @@ html, body {
   border-radius: var(--radius-lg);
   font-size: 13.5px;
   line-height: 1.65;
+  box-shadow: var(--shadow-sm);
 }
 
 .msg.user .msg-bubble {
-  background: var(--black3);
-  border: 1px solid var(--black5);
-  color: var(--white);
+  background: var(--navy);
+  color: rgba(255,255,255,0.92);
   border-bottom-right-radius: 4px;
 }
 
 .msg.ai .msg-bubble {
-  background: var(--black2);
-  border: 1px solid var(--black5);
-  color: var(--white2);
+  background: var(--white);
+  border: 1px solid var(--grey2);
+  color: var(--text);
   border-bottom-left-radius: 4px;
 }
 
-.msg-bubble.clarification { border-color: var(--warn); background: rgba(200,150,64,0.07); }
-.msg-bubble.error         { border-color: var(--error); background: rgba(200,75,75,0.07); }
-.msg-bubble.success       { border-color: var(--grey1); }
+.msg-bubble.clarification {
+  border-color: var(--amber-bdr);
+  background: var(--amber-bg);
+}
+
+.msg-bubble.error {
+  border-color: var(--red-bdr);
+  background: var(--red-bg);
+  color: var(--red);
+}
 
 .msg-meta {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  color: var(--grey2);
-  letter-spacing: 0.5px;
+  font-size: 10px;
+  color: var(--grey4);
   margin-top: 5px;
+  font-family: var(--font-mono);
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
 }
 
@@ -422,91 +488,110 @@ html, body {
 .explanation-pill {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: var(--black3);
-  border: 1px solid var(--black5);
+  gap: 6px;
+  background: var(--sky);
+  border: 1px solid var(--sky2);
   border-radius: 20px;
-  padding: 3px 10px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--grey3);
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--navy);
   margin-bottom: 8px;
 }
 
-/* ── TABLE ────────────────────────────────────────────────────── */
+/* ═══ RESULT CONTAINER ════════════════════════════════════════════ */
 .result-container {
   margin-top: 10px;
-  background: var(--black2);
-  border: 1px solid var(--black5);
+  background: var(--white);
+  border: 1px solid var(--grey2);
   border-radius: var(--radius-lg);
   overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
 .result-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--black5);
-  background: var(--black3);
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--grey2);
+  background: var(--grey1);
 }
 
 .result-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 1px;
-  color: var(--grey3);
-  text-transform: uppercase;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text2);
+  letter-spacing: 0.3px;
 }
 
 .row-count-badge {
-  background: var(--black5);
-  color: var(--grey4);
-  font-family: var(--font-mono);
-  font-size: 9px;
-  padding: 2px 7px;
+  background: var(--navy);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
   border-radius: 10px;
-  letter-spacing: 0.5px;
 }
 
+.toggle-view-btn {
+  background: var(--white);
+  border: 1px solid var(--grey2);
+  color: var(--text2);
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--trans);
+}
+
+.toggle-view-btn:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+
+/* Table */
 .table-wrap {
   overflow-x: auto;
-  max-height: 320px;
+  max-height: 300px;
   overflow-y: auto;
 }
 
 .table-wrap::-webkit-scrollbar { height: 4px; width: 4px; }
-.table-wrap::-webkit-scrollbar-thumb { background: var(--black5); }
+.table-wrap::-webkit-scrollbar-thumb { background: var(--grey2); }
 
 table.data-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: 12.5px;
 }
 
 table.data-table th {
-  background: var(--black3);
-  color: var(--grey3);
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 1.5px;
+  background: var(--grey1);
+  color: var(--text2);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
-  padding: 10px 14px;
+  padding: 10px 16px;
   text-align: left;
   white-space: nowrap;
-  border-bottom: 1px solid var(--black5);
+  border-bottom: 1px solid var(--grey2);
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
 table.data-table td {
-  padding: 9px 14px;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-  color: var(--white2);
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--grey2);
+  color: var(--text2);
   white-space: nowrap;
   max-width: 220px;
   overflow: hidden;
@@ -514,71 +599,68 @@ table.data-table td {
 }
 
 table.data-table tr:last-child td { border-bottom: none; }
-table.data-table tbody tr:hover td { background: var(--black4); }
+table.data-table tbody tr:hover td { background: var(--sky); }
 
-/* ── CHART ────────────────────────────────────────────────────── */
+/* Chart */
 .chart-container {
   padding: 20px;
   position: relative;
   height: 280px;
+  background: var(--white);
 }
 
-/* ── DOWNLOAD BUTTON ──────────────────────────────────────────── */
+/* Download row */
 .download-row {
-  padding: 10px 16px;
-  border-top: 1px solid var(--black5);
+  padding: 12px 18px;
+  border-top: 1px solid var(--grey2);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: var(--grey1);
 }
 
 .download-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--black4);
-  border: 1px solid var(--grey1);
-  color: var(--white);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 6px 14px;
-  border-radius: var(--radius);
+  background: var(--navy);
+  border: none;
+  color: #fff;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: var(--trans);
   text-decoration: none;
 }
 
 .download-btn:hover {
-  background: var(--white);
-  color: var(--black);
-  border-color: var(--white);
+  background: var(--navy3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26,39,68,0.2);
 }
 
-.download-btn svg { width: 12px; height: 12px; }
+.download-btn svg { width: 13px; height: 13px; }
 
 .large-dataset-note {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  color: var(--grey3);
-  letter-spacing: 0.5px;
+  font-size: 11px;
+  color: var(--text3);
+  font-weight: 500;
 }
 
-/* ── SQL TOGGLE ───────────────────────────────────────────────── */
-.sql-toggle {
-  margin-top: 8px;
-}
+/* SQL toggle */
+.sql-toggle { padding: 0 18px 14px; }
 
 .sql-toggle-btn {
   background: none;
   border: none;
-  color: var(--grey2);
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 1px;
+  color: var(--text3);
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
   cursor: pointer;
-  text-transform: uppercase;
   padding: 0;
   transition: var(--trans);
   display: flex;
@@ -586,18 +668,18 @@ table.data-table tbody tr:hover td { background: var(--black4); }
   gap: 5px;
 }
 
-.sql-toggle-btn:hover { color: var(--grey4); }
+.sql-toggle-btn:hover { color: var(--navy); }
 
 .sql-code {
   display: none;
-  background: var(--black3);
-  border: 1px solid var(--black5);
-  border-radius: var(--radius);
-  padding: 10px 14px;
-  margin-top: 6px;
+  background: var(--grey1);
+  border: 1px solid var(--grey2);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-top: 8px;
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--grey4);
+  color: var(--text2);
   line-height: 1.6;
   white-space: pre-wrap;
   word-break: break-all;
@@ -605,19 +687,31 @@ table.data-table tbody tr:hover td { background: var(--black4); }
 
 .sql-code.visible { display: block; }
 
-/* ── TYPING INDICATOR ─────────────────────────────────────────── */
+/* Narrative block */
+.narrative-block {
+  background: var(--sky);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 10px 14px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--navy);
+  line-height: 1.65;
+}
+
+/* ═══ TYPING INDICATOR ════════════════════════════════════════════ */
 .typing-indicator {
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 12px 16px;
+  padding: 4px 0;
 }
 
 .typing-dot {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: var(--grey2);
+  background: var(--grey3);
   animation: typing-bounce 1.4s infinite ease-in-out;
 }
 
@@ -627,32 +721,32 @@ table.data-table tbody tr:hover td { background: var(--black4); }
 
 @keyframes typing-bounce {
   0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
-  40% { transform: translateY(-6px); opacity: 1; }
+  40% { transform: translateY(-5px); opacity: 1; }
 }
 
-/* ── INPUT AREA ───────────────────────────────────────────────── */
+/* ═══ INPUT AREA ══════════════════════════════════════════════════ */
 .input-area {
   flex-shrink: 0;
   padding: 16px 28px 20px;
-  border-top: 1px solid var(--black5);
-  background: var(--black);
+  border-top: 1px solid var(--grey2);
+  background: var(--white);
 }
 
 .input-wrapper {
   display: flex;
   gap: 10px;
   align-items: flex-end;
-  background: var(--black2);
-  border: 1px solid var(--black5);
+  background: var(--grey1);
+  border: 1.5px solid var(--grey2);
   border-radius: var(--radius-lg);
-  padding: 10px 10px 10px 16px;
+  padding: 10px 10px 10px 18px;
   transition: var(--trans);
-  position: relative;
 }
 
 .input-wrapper:focus-within {
-  border-color: var(--grey1);
-  box-shadow: 0 0 0 3px rgba(100,100,100,0.08);
+  border-color: var(--navy);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(26,39,68,0.08);
 }
 
 textarea#input {
@@ -660,8 +754,8 @@ textarea#input {
   background: none;
   border: none;
   outline: none;
-  color: var(--white);
-  font-family: var(--font-body);
+  color: var(--text);
+  font-family: var(--font);
   font-size: 13.5px;
   line-height: 1.6;
   resize: none;
@@ -670,30 +764,38 @@ textarea#input {
   overflow-y: auto;
 }
 
-textarea#input::placeholder { color: var(--grey2); }
-textarea#input::-webkit-scrollbar { width: 3px; }
-textarea#input::-webkit-scrollbar-thumb { background: var(--black5); }
+textarea#input::placeholder { color: var(--grey4); }
 
 .send-btn {
-  width: 36px;
-  height: 36px;
-  background: var(--white);
+  width: 38px;
+  height: 38px;
+  background: var(--navy);
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: var(--trans);
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(26,39,68,0.25);
 }
 
-.send-btn:hover { background: var(--white2); transform: scale(0.97); }
-.send-btn:active { transform: scale(0.93); }
-.send-btn:disabled { background: var(--black5); cursor: not-allowed; }
+.send-btn:hover {
+  background: var(--navy3);
+  transform: scale(0.97);
+}
 
-.send-btn svg { width: 15px; height: 15px; color: var(--black); }
-.send-btn:disabled svg { color: var(--grey2); }
+.send-btn:active { transform: scale(0.93); }
+
+.send-btn:disabled {
+  background: var(--grey2);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.send-btn svg { width: 15px; height: 15px; color: #fff; }
+.send-btn:disabled svg { color: var(--grey4); }
 
 .input-footer {
   display: flex;
@@ -703,49 +805,129 @@ textarea#input::-webkit-scrollbar-thumb { background: var(--black5); }
 }
 
 .input-hint {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  color: var(--grey2);
+  font-size: 10px;
+  color: var(--grey4);
+  font-weight: 500;
+}
+
+/* ═══ SETTINGS MODAL ══════════════════════════════════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26,39,68,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal-card {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  width: 440px;
+  max-width: 90vw;
+  box-shadow: var(--shadow-lg);
+  animation: fadeUp 0.2s ease;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  margin-bottom: 6px;
+}
+
+.modal-sub {
+  font-size: 12px;
+  color: var(--text3);
+  margin-bottom: 22px;
+}
+
+.modal-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text2);
   letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
 }
 
-/* ── NARRATIVE BLOCK ──────────────────────────────────────────── */
-.narrative-block {
-  background: var(--black3);
-  border-left: 2px solid var(--grey1);
-  border-radius: 0 var(--radius) var(--radius) 0;
+.modal-input {
+  width: 100%;
+  background: var(--grey1);
+  border: 1.5px solid var(--grey2);
+  color: var(--text);
   padding: 10px 14px;
-  margin-top: 8px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  outline: none;
+  margin-bottom: 20px;
+  transition: var(--trans);
+}
+
+.modal-input:focus {
+  border-color: var(--navy);
+  background: var(--white);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn-cancel {
+  background: none;
+  border: 1.5px solid var(--grey2);
+  color: var(--text2);
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font);
   font-size: 13px;
-  color: var(--white2);
-  font-style: italic;
-  line-height: 1.65;
+  font-weight: 600;
+  transition: var(--trans);
 }
 
-/* ── SCROLLBAR ─────────────────────────────────────────────────── */
-.quick-questions::-webkit-scrollbar { width: 3px; }
-.quick-questions::-webkit-scrollbar-thumb { background: var(--black5); }
+.btn-cancel:hover { border-color: var(--grey3); }
 
-/* ── LOADING OVERLAY ──────────────────────────────────────────── */
-.loading-spinner {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border: 2px solid var(--black5);
-  border-top-color: var(--grey3);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
+.btn-save {
+  background: var(--navy);
+  border: none;
+  color: #fff;
+  padding: 9px 20px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  transition: var(--trans);
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
+.btn-save:hover {
+  background: var(--navy3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26,39,68,0.2);
+}
 
-/* ── RESPONSIVE ────────────────────────────────────────────────── */
+/* ═══ SCROLLBAR ═══════════════════════════════════════════════════ */
+.sidebar-nav::-webkit-scrollbar { width: 3px; }
+.sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+
+/* ═══ RESPONSIVE ══════════════════════════════════════════════════ */
 @media (max-width: 768px) {
   .app { grid-template-columns: 1fr; }
   .sidebar { display: none; }
   .messages { padding: 16px; }
   .input-area { padding: 12px 16px 16px; }
-  .main-header { padding: 12px 16px; }
+  .main-header { padding: 14px 16px; }
 }
 </style>
 </head>
@@ -755,73 +937,73 @@ textarea#input::-webkit-scrollbar-thumb { background: var(--black5); }
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <h1>RCMS<br>Intelligence</h1>
-      <span>Refinery Contract AI</span>
-      <div class="version-badge">v1.0 · BETA</div>
+      <div class="logo-badge">
+        <div class="logo-icon">⬡</div>
+        <span>RCMS v1.0</span>
+      </div>
+      <h1>Contract<br>Intelligence</h1>
+      <p>Refinery AI · Read-only · Secure</p>
     </div>
 
-    <div class="sidebar-section">
-      <div class="sidebar-section-label">Aksi</div>
-      <button class="sidebar-btn" onclick="clearChat()">
-        <span class="btn-icon">✕</span> Chat Baru
+    <div class="sidebar-nav">
+      <div class="nav-label">Aksi</div>
+      <button class="nav-btn" onclick="clearChat()">
+        <div class="nav-icon">✕</div>
+        Chat Baru
       </button>
-    </div>
 
-    <div class="sidebar-section">
-      <div class="sidebar-section-label">Pertanyaan Cepat</div>
-    </div>
+      <div class="nav-label">Pertanyaan Cepat</div>
 
-    <div class="quick-questions">
-      <div class="quick-q" onclick="sendQuick(this)">
-        <strong>Vendor</strong>
-        Tampilkan daftar vendor yang statusnya aktif beserta skor mereka
-      </div>
-      <div class="quick-q" onclick="sendQuick(this)">
-        <strong>Kontrak</strong>
-        Berapa total nilai kontrak yang sedang aktif saat ini?
-      </div>
-      <div class="quick-q" onclick="sendQuick(this)">
-        <strong>Tagihan</strong>
-        Tagihan apa saja yang statusnya masih pending bulan ini?
-      </div>
-      <div class="quick-q" onclick="sendQuick(this)">
-        <strong>Analytics</strong>
-        Distribusi tipe kontrak — tampilkan dalam bentuk chart pie
-      </div>
-      <div class="quick-q" onclick="sendQuick(this)">
-        <strong>KOM</strong>
-        Kontrak mana saja yang KOM-nya terlambat?
-      </div>
-      <div class="quick-q" onclick="sendQuick(this)">
-        <strong>Progress</strong>
-        Bandingkan progress plan vs actual untuk kontrak aktif
-      </div>
-      <div class="quick-q" onclick="sendQuick(this)">
-        <strong>LTSA</strong>
-        Rekap kunjungan LTSA bulan ini berdasarkan jenis layanan
-      </div>
-      <div class="quick-q" onclick="sendQuick(this)">
-        <strong>PADI</strong>
-        Pembelian PADI yang belum terbayar, urutkan dari nilai terbesar
-      </div>
-      <div class="quick-q" onclick="sendQuick(this)">
-        <strong>Dokumen</strong>
-        Dokumen approval yang statusnya masih Pending
-      </div>
-      <div class="quick-q" onclick="sendQuick(this)">
-        <strong>Amandemen</strong>
-        Daftar kontrak yang memiliki amandemen beserta nilai perubahan
-      </div>
+      <button class="quick-q" onclick="sendQuick(this)">
+        <div class="quick-q-tag">Vendor</div>
+        <div class="quick-q-text">Daftar vendor aktif beserta skor mereka</div>
+      </button>
+      <button class="quick-q" onclick="sendQuick(this)">
+        <div class="quick-q-tag">Kontrak</div>
+        <div class="quick-q-text">Total nilai kontrak yang sedang aktif</div>
+      </button>
+      <button class="quick-q" onclick="sendQuick(this)">
+        <div class="quick-q-tag">Tagihan</div>
+        <div class="quick-q-text">Tagihan pending bulan ini</div>
+      </button>
+      <button class="quick-q" onclick="sendQuick(this)">
+        <div class="quick-q-tag">Analytics</div>
+        <div class="quick-q-text">Distribusi tipe kontrak — tampilkan pie chart</div>
+      </button>
+      <button class="quick-q" onclick="sendQuick(this)">
+        <div class="quick-q-tag">KOM</div>
+        <div class="quick-q-text">Kontrak yang KOM-nya terlambat</div>
+      </button>
+      <button class="quick-q" onclick="sendQuick(this)">
+        <div class="quick-q-tag">Progress</div>
+        <div class="quick-q-text">Progress plan vs actual kontrak aktif</div>
+      </button>
+      <button class="quick-q" onclick="sendQuick(this)">
+        <div class="quick-q-tag">LTSA</div>
+        <div class="quick-q-text">Rekap kunjungan LTSA bulan ini</div>
+      </button>
+      <button class="quick-q" onclick="sendQuick(this)">
+        <div class="quick-q-tag">PADI</div>
+        <div class="quick-q-text">Pembelian PADI belum terbayar, terbesar</div>
+      </button>
+      <button class="quick-q" onclick="sendQuick(this)">
+        <div class="quick-q-tag">Dokumen</div>
+        <div class="quick-q-text">Dokumen approval masih Pending</div>
+      </button>
+      <button class="quick-q" onclick="sendQuick(this)">
+        <div class="quick-q-tag">Amandemen</div>
+        <div class="quick-q-text">Kontrak beramandemen beserta nilai perubahan</div>
+      </button>
     </div>
 
     <div class="sidebar-status">
       <div class="status-row">
         <div class="status-dot" id="db-dot"></div>
-        <span id="db-status">Checking database...</span>
+        <span class="status-text" id="db-status">Checking database...</span>
       </div>
       <div class="status-row">
         <div class="status-dot" id="ai-dot"></div>
-        <span id="ai-status">AI Engine</span>
+        <span class="status-text" id="ai-status">AI Engine</span>
       </div>
     </div>
   </aside>
@@ -829,23 +1011,34 @@ textarea#input::-webkit-scrollbar-thumb { background: var(--black5); }
   <!-- MAIN -->
   <main class="main">
     <div class="main-header">
-      <div>
-        <div class="header-title">Contract Intelligence Query</div>
-        <div class="header-subtitle">Powered by Claude AI · PostgreSQL · RCMS v1.0</div>
+      <div class="header-left">
+        <div class="header-avatar">⬡</div>
+        <div>
+          <div class="header-greeting">Selamat datang 👋</div>
+          <div class="header-title">Contract Intelligence Query</div>
+        </div>
       </div>
       <div class="header-actions">
-        <button class="hdr-btn" onclick="clearChat()">Clear</button>
-        <button class="hdr-btn" onclick="toggleSettings()">Config</button>
+        <button class="hdr-btn" onclick="clearChat()">Chat Baru</button>
+        <button class="hdr-btn" onclick="toggleSettings()">⚙ Config</button>
       </div>
     </div>
 
     <div class="messages" id="messages">
       <div class="welcome" id="welcome">
-        <div class="welcome-icon">⬡</div>
-        <h2>Tanya Apa Saja</h2>
-        <p>Ajukan pertanyaan bisnis dalam bahasa Indonesia. AI akan menganalisis database kontrak dan memberikan jawaban dengan data riil.</p>
-        <p>Hasil dapat berupa narasi, tabel interaktif, grafik, atau kombinasinya — secara otomatis.</p>
-        <div class="welcome-caps">Ketik pertanyaan · Enter to send · Data aman & read-only</div>
+        <div class="welcome-card">
+          <div class="welcome-icon">⬡</div>
+          <h2>Tanya Apa Saja</h2>
+          <p>Ajukan pertanyaan bisnis dalam bahasa Indonesia. AI akan menganalisis database kontrak dan memberikan jawaban dengan data riil.</p>
+          <p style="color:var(--text3);font-size:12px;margin-top:4px;">Hasil otomatis berupa narasi, tabel, atau grafik.</p>
+          <div class="welcome-chips">
+            <span class="welcome-chip">📋 Kontrak</span>
+            <span class="welcome-chip">🏢 Vendor</span>
+            <span class="welcome-chip">💰 Tagihan</span>
+            <span class="welcome-chip">📈 Analytics</span>
+            <span class="welcome-chip">🔒 Read-only</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -861,22 +1054,23 @@ textarea#input::-webkit-scrollbar-thumb { background: var(--black5); }
         </button>
       </div>
       <div class="input-footer">
-        <span class="input-hint">Enter kirim · Shift+Enter baris baru · AI hanya bisa query baca (SELECT)</span>
+        <span class="input-hint">Enter kirim · Shift+Enter baris baru · Hanya query SELECT yang diproses</span>
         <span class="input-hint" id="char-count"></span>
       </div>
     </div>
   </main>
 </div>
 
-<!-- Settings Modal (hidden) -->
-<div id="settings-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:100; display:none; align-items:center; justify-content:center;">
-  <div style="background:var(--black2); border:1px solid var(--black5); border-radius:var(--radius-lg); padding:28px; width:420px; max-width:90vw;">
-    <h3 style="font-family:var(--font-display);font-size:16px;margin-bottom:20px;">Konfigurasi Backend</h3>
-    <label style="display:block;font-family:var(--font-mono);font-size:10px;color:var(--grey3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">API URL Backend</label>
-    <input id="api-url-input" type="text" style="width:100%;background:var(--black3);border:1px solid var(--black5);color:var(--white);padding:9px 12px;border-radius:var(--radius);font-family:var(--font-mono);font-size:12px;outline:none;margin-bottom:16px;" placeholder="https://chatbotkontrak-production.up.railway.app">
-    <div style="display:flex;gap:8px;justify-content:flex-end;">
-      <button onclick="toggleSettings()" style="background:none;border:1px solid var(--black5);color:var(--grey4);padding:7px 14px;border-radius:var(--radius);cursor:pointer;font-size:12px;">Batal</button>
-      <button onclick="saveSettings()" style="background:var(--white);color:var(--black);border:none;padding:7px 14px;border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:600;">Simpan</button>
+<!-- Settings Modal -->
+<div id="settings-modal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-title">Konfigurasi Backend</div>
+    <div class="modal-sub">Atur URL API untuk koneksi ke server RCMS</div>
+    <label class="modal-label">API URL Backend</label>
+    <input id="api-url-input" type="text" class="modal-input" placeholder="https://chatbotkontrak-production.up.railway.app">
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="toggleSettings()">Batal</button>
+      <button class="btn-save" onclick="saveSettings()">Simpan</button>
     </div>
   </div>
 </div>
@@ -927,14 +1121,11 @@ function autoResize(el) {
 }
 
 function handleKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendMessage();
-  }
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 }
 
 function sendQuick(el) {
-  const text = el.innerText.replace(/^[A-Z]+\s+/, '').trim();
+  const text = el.querySelector('.quick-q-text').innerText.trim();
   const input = document.getElementById('input');
   input.value = text;
   autoResize(input);
@@ -947,22 +1138,29 @@ function clearChat() {
   const messages = document.getElementById('messages');
   messages.innerHTML = `
     <div class="welcome" id="welcome">
-      <div class="welcome-icon">⬡</div>
-      <h2>Tanya Apa Saja</h2>
-      <p>Ajukan pertanyaan bisnis dalam bahasa Indonesia. AI akan menganalisis database kontrak dan memberikan jawaban dengan data riil.</p>
-      <p>Hasil dapat berupa narasi, tabel interaktif, grafik, atau kombinasinya — secara otomatis.</p>
-      <div class="welcome-caps">Ketik pertanyaan · Enter to send · Data aman & read-only</div>
+      <div class="welcome-card">
+        <div class="welcome-icon">⬡</div>
+        <h2>Tanya Apa Saja</h2>
+        <p>Ajukan pertanyaan bisnis dalam bahasa Indonesia. AI akan menganalisis database kontrak dan memberikan jawaban dengan data riil.</p>
+        <p style="color:var(--text3);font-size:12px;margin-top:4px;">Hasil otomatis berupa narasi, tabel, atau grafik.</p>
+        <div class="welcome-chips">
+          <span class="welcome-chip">📋 Kontrak</span>
+          <span class="welcome-chip">🏢 Vendor</span>
+          <span class="welcome-chip">💰 Tagihan</span>
+          <span class="welcome-chip">📈 Analytics</span>
+          <span class="welcome-chip">🔒 Read-only</span>
+        </div>
+      </div>
     </div>`;
 }
 
 function toggleSettings() {
   const modal = document.getElementById('settings-modal');
-  modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+  modal.classList.toggle('open');
 }
 
 function saveSettings() {
   API_URL = document.getElementById('api-url-input').value.trim();
-  localStorage.setItem('rcms_api_url', API_URL);
   toggleSettings();
   checkHealth();
 }
@@ -975,7 +1173,6 @@ async function sendMessage() {
   const message = input.value.trim();
   if (!message || isLoading) return;
 
-  // Hide welcome
   const welcome = document.getElementById('welcome');
   if (welcome) welcome.remove();
 
@@ -985,13 +1182,8 @@ async function sendMessage() {
   input.style.height = 'auto';
   document.getElementById('char-count').textContent = '';
 
-  // Add user message
   appendUserMessage(message);
-
-  // Add typing indicator
   const typingId = appendTyping();
-
-  // Add to history
   conversationHistory.push({ role: 'user', content: message });
 
   try {
@@ -1010,10 +1202,7 @@ async function sendMessage() {
 
     const data = await res.json();
     removeTyping(typingId);
-
-    // Add AI response to history
     conversationHistory.push({ role: 'assistant', content: data.message || '' });
-
     appendAIMessage(data);
 
   } catch (e) {
@@ -1084,23 +1273,20 @@ function appendAIMessage(data) {
   el.id = msgId;
 
   const bubbleClass = data.type === 'clarification' ? 'clarification'
-                    : data.type === 'error'         ? 'error'
-                    : '';
+                    : data.type === 'error'         ? 'error' : '';
 
   let inner = `
     <div class="msg-avatar">⬡</div>
     <div class="msg-body" style="max-width:90%">`;
 
-  // Explanation pill for query type
   if (data.type === 'query' && data.message) {
     inner += `<div class="explanation-pill">📊 ${escapeHtml(data.message)}</div>`;
   }
 
-  // Main bubble
   inner += `<div class="msg-bubble ${bubbleClass}">`;
 
   if (data.type === 'clarification') {
-    inner += `<strong style="font-family:var(--font-mono);font-size:10px;color:var(--warn);letter-spacing:1px;text-transform:uppercase;">Butuh Klarifikasi</strong><br><br>`;
+    inner += `<strong style="font-size:10px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:1px;">Butuh Klarifikasi</strong><br><br>`;
     inner += escapeHtml(data.message || '');
   } else if (data.type === 'error') {
     inner += escapeHtml(data.message || 'Terjadi kesalahan.');
@@ -1110,97 +1296,75 @@ function appendAIMessage(data) {
     if (data.narrative) {
       inner += formatNarrative(data.narrative);
     } else {
-      inner += `<span style="color:var(--grey3);font-size:12px;">Hasil query siap ditampilkan di bawah.</span>`;
+      inner += `<span style="color:var(--text3);font-size:12px;">Hasil query siap ditampilkan di bawah.</span>`;
     }
   }
 
-  inner += `</div>`; // close msg-bubble
+  inner += `</div>`;
 
-  // Row count meta
   const metaParts = [now];
-  if (data.row_count !== undefined && data.row_count !== null) {
-    metaParts.push(`${data.row_count} baris`);
-  }
+  if (data.row_count !== undefined && data.row_count !== null) metaParts.push(`${data.row_count} baris`);
   inner += `<div class="msg-meta">${metaParts.join(' · ')}</div>`;
 
-  // Result container (table/chart/download)
   if (data.type === 'query' && data.data && data.data.length > 0) {
     const containerId = 'result-' + msgCounter;
     const chartId = 'chart-' + msgCounter;
     const showChart = data.chart && data.chart.type;
-    const showTable = !showChart || (data.data.length > 0);
     const showDownload = data.row_count > 20;
 
     inner += `<div class="result-container">`;
-
-    // Header
     inner += `
       <div class="result-header">
         <div class="result-label">
-          ${showChart ? '📈 Visualisasi' : '📋 Data'}
+          ${showChart ? '📈' : '📋'} ${showChart ? 'Visualisasi' : 'Data Hasil'}
           <span class="row-count-badge">${data.row_count} baris · ${data.columns.length} kolom</span>
         </div>
-        ${showChart && !showTable ? '' : `<div style="display:flex;gap:6px">
-          ${showChart ? `<button onclick="toggleView('${containerId}')" style="background:var(--black5);border:none;color:var(--grey4);font-family:var(--font-mono);font-size:9px;letter-spacing:1px;padding:3px 9px;border-radius:4px;cursor:pointer;text-transform:uppercase;">Toggle View</button>` : ''}
-        </div>`}
+        ${showChart ? `<button class="toggle-view-btn" onclick="toggleView('${containerId}')">Toggle Tabel</button>` : ''}
       </div>`;
 
-    // Chart
     if (showChart) {
       inner += `<div class="chart-container" id="${chartId}-wrap"><canvas id="${chartId}"></canvas></div>`;
     }
 
-    // Table
     const tableDisplay = showChart ? 'none' : 'block';
     inner += `<div class="table-wrap" id="${containerId}" style="display:${tableDisplay}">`;
     inner += buildTable(data.data, data.columns);
     inner += `</div>`;
 
-    // Download + SQL
     inner += `<div class="download-row">`;
     if (showDownload) {
-      const dlSql = encodeURIComponent(data.sql || '');
       inner += `
-        <div>
-          <div class="large-dataset-note">Dataset besar terdeteksi — unduh untuk analisis lengkap</div>
-        </div>
-        <a class="download-btn" onclick="downloadExcel('${msgId}')">
+        <span class="large-dataset-note">Dataset besar — unduh untuk analisis lengkap</span>
+        <button class="download-btn" onclick="downloadExcel('${msgId}')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
           Unduh Excel
-        </a>`;
+        </button>`;
     } else {
       inner += `<span class="large-dataset-note">${data.row_count} baris · siap dianalisis</span><span></span>`;
     }
-    inner += `</div>`; // close download-row
+    inner += `</div>`;
 
-    // SQL toggle
     if (data.sql) {
       const sqlId = 'sql-' + msgCounter;
       inner += `
-        <div class="sql-toggle" style="padding:0 16px 12px">
-          <button class="sql-toggle-btn" onclick="toggleSQL('${sqlId}')">
-            <span>▶</span> Lihat Query SQL
-          </button>
+        <div class="sql-toggle">
+          <button class="sql-toggle-btn" onclick="toggleSQL('${sqlId}')">▶ Lihat Query SQL</button>
           <pre class="sql-code" id="${sqlId}">${escapeHtml(data.sql)}</pre>
         </div>`;
     }
 
-    inner += `</div>`; // close result-container
-
-    // Store data for download
+    inner += `</div>`;
     el.dataset.sql = data.sql || '';
     el.dataset.rowCount = data.row_count || 0;
   }
 
-  inner += `</div>`; // close msg-body
+  inner += `</div>`;
   el.innerHTML = inner;
   container.appendChild(el);
   container.scrollTop = container.scrollHeight;
 
-  // Render chart after DOM insert
   if (data.chart && data.chart.type && data.data && data.data.length > 0) {
-    const chartId = 'chart-' + msgCounter;
-    setTimeout(() => renderChart(chartId, data), 50);
+    setTimeout(() => renderChart('chart-' + msgCounter, data), 50);
   }
 }
 
@@ -1214,8 +1378,6 @@ function renderChart(canvasId, data) {
   const cfg = data.chart.config || {};
   const rows = data.data;
   const cols = data.columns;
-
-  // Auto-detect columns if not specified
   let xCol = cfg.x_column || cols[0];
   let yCol = cfg.y_column || cols.find(c => {
     const sample = rows[0][c];
@@ -1229,9 +1391,10 @@ function renderChart(canvasId, data) {
   });
 
   const palette = [
-    'rgba(245,245,240,0.85)', 'rgba(200,200,196,0.7)',
-    'rgba(150,160,168,0.7)',  'rgba(100,110,118,0.7)',
-    'rgba(60,70,78,0.85)',    'rgba(40,48,56,0.7)',
+    'rgba(26,39,68,0.85)', 'rgba(65,105,200,0.75)',
+    'rgba(90,128,224,0.7)', 'rgba(34,197,94,0.75)',
+    'rgba(245,158,11,0.75)', 'rgba(139,92,246,0.75)',
+    'rgba(239,68,68,0.75)', 'rgba(20,184,166,0.75)',
   ];
 
   const chartType = data.chart.type;
@@ -1242,13 +1405,13 @@ function renderChart(canvasId, data) {
     datasets: [{
       label: cfg.label || yCol,
       data: values,
-      backgroundColor: isPie ? labels.map((_, i) => palette[i % palette.length]) : 'rgba(245,245,240,0.12)',
-      borderColor: isPie ? labels.map((_, i) => palette[i % palette.length]) : 'rgba(245,245,240,0.6)',
-      borderWidth: isPie ? 1 : 1.5,
+      backgroundColor: isPie ? labels.map((_, i) => palette[i % palette.length]) : 'rgba(26,39,68,0.08)',
+      borderColor: isPie ? labels.map((_, i) => palette[i % palette.length]) : 'rgba(26,39,68,0.7)',
+      borderWidth: isPie ? 1 : 2,
       fill: chartType === 'line',
       tension: 0.4,
-      pointBackgroundColor: 'rgba(245,245,240,0.9)',
-      pointRadius: 3,
+      pointBackgroundColor: 'rgba(26,39,68,0.9)',
+      pointRadius: 4,
     }]
   };
 
@@ -1259,16 +1422,13 @@ function renderChart(canvasId, data) {
       legend: {
         display: isPie,
         position: 'right',
-        labels: {
-          color: '#888', font: { family: 'DM Mono', size: 10 },
-          padding: 12, boxWidth: 10
-        }
+        labels: { color: '#5a6a88', font: { family: 'Plus Jakarta Sans', size: 11 }, padding: 12, boxWidth: 10 }
       },
       tooltip: {
-        backgroundColor: '#111', borderColor: '#2d2d2d', borderWidth: 1,
-        titleColor: '#f5f5f0', bodyColor: '#aaa',
-        titleFont: { family: 'DM Mono', size: 10 },
-        bodyFont: { family: 'DM Sans', size: 12 },
+        backgroundColor: '#1a2744', borderColor: '#2e3d6e', borderWidth: 1,
+        titleColor: '#fff', bodyColor: 'rgba(255,255,255,0.7)',
+        titleFont: { family: 'Plus Jakarta Sans', size: 12, weight: '700' },
+        bodyFont: { family: 'Plus Jakarta Sans', size: 12 },
         callbacks: {
           label: (ctx) => {
             const val = ctx.raw;
@@ -1281,24 +1441,22 @@ function renderChart(canvasId, data) {
     },
     scales: isPie ? {} : {
       x: {
-        ticks: { color: '#555', font: { family: 'DM Mono', size: 9 }, maxRotation: 45 },
-        grid: { color: 'rgba(255,255,255,0.03)' },
-        border: { color: '#2d2d2d' }
+        ticks: { color: '#8896b0', font: { family: 'Plus Jakarta Sans', size: 10 }, maxRotation: 45 },
+        grid: { color: 'rgba(26,39,68,0.06)' },
+        border: { color: 'rgba(26,39,68,0.1)' }
       },
       y: {
         ticks: {
-          color: '#555', font: { family: 'DM Mono', size: 9 },
+          color: '#8896b0', font: { family: 'Plus Jakarta Sans', size: 10 },
           callback: v => v > 1000000 ? `${(v/1000000).toFixed(0)}M` : v.toLocaleString('id-ID')
         },
-        grid: { color: 'rgba(255,255,255,0.04)' },
-        border: { color: '#2d2d2d' }
+        grid: { color: 'rgba(26,39,68,0.06)' },
+        border: { color: 'rgba(26,39,68,0.1)' }
       }
     }
   };
 
-  if (chartInstances[canvasId]) {
-    chartInstances[canvasId].destroy();
-  }
+  if (chartInstances[canvasId]) chartInstances[canvasId].destroy();
   chartInstances[canvasId] = new Chart(canvas, { type: chartType, data: chartData, options });
 }
 
@@ -1306,21 +1464,18 @@ function renderChart(canvasId, data) {
 //  TABLE BUILDER
 // ═══════════════════════════════════════════════════════════════
 function buildTable(data, columns) {
-  if (!data || data.length === 0) return '<div style="padding:20px;text-align:center;color:var(--grey3)">Tidak ada data</div>';
+  if (!data || data.length === 0) return '<div style="padding:20px;text-align:center;color:var(--grey4)">Tidak ada data</div>';
 
   let html = '<table class="data-table"><thead><tr>';
-  columns.forEach(col => {
-    html += `<th>${escapeHtml(col.replace(/_/g, ' '))}</th>`;
-  });
+  columns.forEach(col => { html += `<th>${escapeHtml(col.replace(/_/g, ' '))}</th>`; });
   html += '</tr></thead><tbody>';
 
-  data.slice(0, 200).forEach(row => { // render max 200 rows in UI
+  data.slice(0, 200).forEach(row => {
     html += '<tr>';
     columns.forEach(col => {
       let val = row[col];
       if (val === null || val === undefined) val = '—';
       const str = String(val);
-      // Format currency-like numbers
       if (col.includes('nilai') || col.includes('harga')) {
         const num = parseFloat(str);
         if (!isNaN(num)) val = 'Rp ' + num.toLocaleString('id-ID');
@@ -1354,7 +1509,7 @@ function toggleSQL(id) {
   if (!el) return;
   el.classList.toggle('visible');
   const btn = el.previousElementSibling;
-  if (btn) btn.innerHTML = el.classList.contains('visible') ? '<span>▼</span> Sembunyikan Query' : '<span>▶</span> Lihat Query SQL';
+  if (btn) btn.textContent = el.classList.contains('visible') ? '▼ Sembunyikan Query' : '▶ Lihat Query SQL';
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1375,16 +1530,12 @@ async function downloadExcel(msgId) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sql, filename })
     });
-
     if (!res.ok) throw new Error('Download gagal');
-
     const blob = await res.blob();
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = `${filename}.xlsx`;
-    document.body.appendChild(a);
-    a.click();
+    a.href = url; a.download = `${filename}.xlsx`;
+    document.body.appendChild(a); a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   } catch (e) {
@@ -1398,10 +1549,8 @@ async function downloadExcel(msgId) {
 function escapeHtml(str) {
   if (str === null || str === undefined) return '';
   return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function formatNarrative(text) {
