@@ -104,7 +104,7 @@ def smart_entity_search(user_message: str) -> str:
                 if key not in found_ids:
                     found_ids.add(key)
                     context.append(
-                        f"[VENDOR] '{v[1]}' → id_vendor={v[0]}, "
+                        f"[VENDOR] '{v[1]}' -> id_vendor={v[0]}, "
                         f"status={v[2]}, score={v[3]}"
                     )
 
@@ -127,7 +127,7 @@ def smart_entity_search(user_message: str) -> str:
                 if key not in found_ids:
                     found_ids.add(key)
                     context.append(
-                        f"[KONTRAK] '{k[1]}' → id_kontrak={k[0]}, "
+                        f"[KONTRAK] '{k[1]}' -> id_kontrak={k[0]}, "
                         f"doc={k[2]}, direksi={k[3]}, "
                         f"status={k[4]}, tipe={k[5]}, vendor='{k[6]}'"
                     )
@@ -147,7 +147,7 @@ def smart_entity_search(user_message: str) -> str:
                 if key not in found_ids:
                     found_ids.add(key)
                     context.append(
-                        f"[TAGIHAN] '{t[1]}' → id_tagihan={t[0]}, "
+                        f"[TAGIHAN] '{t[1]}' -> id_tagihan={t[0]}, "
                         f"status={t[2]}, nilai={t[3]}, kontrak='{t[4]}'"
                     )
 
@@ -167,7 +167,7 @@ def smart_entity_search(user_message: str) -> str:
                 if key not in found_ids:
                     found_ids.add(key)
                     context.append(
-                        f"[PADI] '{p[2]}' → id_padi={p[0]}, "
+                        f"[PADI] '{p[2]}' -> id_padi={p[0]}, "
                         f"no_pembelian={p[1]}, nilai={p[3]}, vendor='{p[4]}'"
                     )
 
@@ -240,71 +240,71 @@ TABEL: konfigurasi_sistem
 Kolom: id_setting, nama_setting, nilai_setting, deskripsi, updated_at
 
 Relasi penting:
-- vendor.id_vendor → kontrak.id_vendor (1 vendor banyak kontrak)
-- kontrak.id_kontrak → tagihan.id_kontrak
-- kontrak.id_kontrak → amandemen_kontrak.id_kontrak
-- kontrak.id_kontrak → progress_lumpsum.id_kontrak
-- kontrak.id_kontrak → progress_unit_price.id_kontrak
-- kontrak.id_kontrak → monitoring_ltsa.id_kontrak
-- kontrak.id_kontrak → dokumen_approval.id_kontrak
-- vendor.id_vendor → padi.id_vendor
+- vendor.id_vendor -> kontrak.id_vendor (1 vendor banyak kontrak)
+- kontrak.id_kontrak -> tagihan.id_kontrak
+- kontrak.id_kontrak -> amandemen_kontrak.id_kontrak
+- kontrak.id_kontrak -> progress_lumpsum.id_kontrak
+- kontrak.id_kontrak -> progress_unit_price.id_kontrak
+- kontrak.id_kontrak -> monitoring_ltsa.id_kontrak
+- kontrak.id_kontrak -> dokumen_approval.id_kontrak
+- vendor.id_vendor -> padi.id_vendor
 
 NILAI ENUM & PILIHAN YANG VALID:
 
 1. TIPE KONTRAK (kontrak.tipe_kontrak):
-   - 'Lumpsum'     → kontrak dengan nilai tetap, pembayaran per milestone
-   - 'Unit Price'  → kontrak berdasarkan satuan pekerjaan/volume
-   - 'TSA'         → Technical Service Agreement, jasa teknis rutin
-   - 'LTSA'        → Long Term Service Agreement, jasa jangka panjang
-   - 'TSA/LTSA'    → gabungan TSA dan LTSA
+   - 'Lumpsum'     -> kontrak dengan nilai tetap, pembayaran per milestone
+   - 'Unit Price'  -> kontrak berdasarkan satuan pekerjaan/volume
+   - 'TSA'         -> Technical Service Agreement, jasa teknis rutin
+   - 'LTSA'        -> Long Term Service Agreement, jasa jangka panjang
+   - 'TSA/LTSA'    -> gabungan TSA dan LTSA
 
 2. STATUS KONTRAK (kontrak.status_kontrak):
-   - 'Pre-KOM'     → kontrak belum mulai, masih tahap persiapan KOM
-   - 'Aktif'       → kontrak sedang berjalan
-   - 'Selesai'     → kontrak telah selesai dilaksanakan
-   - 'Terminated'  → kontrak dihentikan sebelum selesai
+   - 'Pre-KOM'     -> kontrak belum mulai, masih tahap persiapan KOM
+   - 'Aktif'       -> kontrak sedang berjalan
+   - 'Selesai'     -> kontrak telah selesai dilaksanakan
+   - 'Terminated'  -> kontrak dihentikan sebelum selesai
 
 3. DISIPLIN (kontrak.disiplin):
-   - 'Instrumentasi' → pekerjaan instrumen & kontrol
-   - 'Stationary'    → pekerjaan bejana/vessel statis
-   - 'Electrical'    → pekerjaan kelistrikan
-   - 'Rotating'      → pekerjaan mesin berputar (pompa, kompresor)
-   - 'Alat Berat'    → pekerjaan menggunakan alat berat
+   - 'Instrumentasi' -> pekerjaan instrumen & kontrol
+   - 'Stationary'    -> pekerjaan bejana/vessel statis
+   - 'Electrical'    -> pekerjaan kelistrikan
+   - 'Rotating'      -> pekerjaan mesin berputar (pompa, kompresor)
+   - 'Alat Berat'    -> pekerjaan menggunakan alat berat
 
 4. DIREKSI PEKERJAAN (kontrak.direksi_pekerjaan):
-   - 'MA5'       → unit/departemen MA5
-   - 'MA6'       → unit/departemen MA6
-   - 'MA7'       → unit/departemen MA7
-   - 'Workshop'  → unit Workshop
+   - 'MA5'       -> unit/departemen MA5
+   - 'MA6'       -> unit/departemen MA6
+   - 'MA7'       -> unit/departemen MA7
+   - 'Workshop'  -> unit Workshop
 
 5. JENIS AMANDEMEN (amandemen_kontrak.jenis_amandemen):
-   - 'Nilai'          → perubahan nilai kontrak saja
-   - 'Waktu'          → perubahan durasi/tanggal saja
-   - 'Nilai dan Waktu' → perubahan nilai sekaligus durasi
+   - 'Nilai'          -> perubahan nilai kontrak saja
+   - 'Waktu'          -> perubahan durasi/tanggal saja
+   - 'Nilai dan Waktu' -> perubahan nilai sekaligus durasi
 
 6. TIPE DOKUMEN APPROVAL (dokumen_approval.tipe_dokumen):
-   - 'Evident Progress'       → bukti progress pekerjaan
-   - 'Report Vendor'          → laporan dari vendor
-   - 'Persetujuan Pelaksanaan' → dokumen persetujuan pelaksanaan
+   - 'Evident Progress'       -> bukti progress pekerjaan
+   - 'Report Vendor'          -> laporan dari vendor
+   - 'Persetujuan Pelaksanaan' -> dokumen persetujuan pelaksanaan
 
 7. STATUS APPROVAL (dokumen_approval.status_approval):
-   - 'Pending'  → menunggu review
-   - 'Approved' → sudah disetujui
-   - 'Rejected' → ditolak
+   - 'Pending'  -> menunggu review
+   - 'Approved' -> sudah disetujui
+   - 'Rejected' -> ditolak
 
 8. STATUS VENDOR (vendor.status_vendor):
-   - 'Active'    → vendor aktif dan dapat digunakan
-   - 'Inactive'  → vendor tidak aktif
-   - 'Blacklist' → vendor diblacklist, tidak boleh digunakan
+   - 'Active'    -> vendor aktif dan dapat digunakan
+   - 'Inactive'  -> vendor tidak aktif
+   - 'Blacklist' -> vendor diblacklist, tidak boleh digunakan
 
 9. JENIS LAYANAN LTSA (monitoring_ltsa.jenis_layanan):
-   - 'Preventive' → perawatan rutin/pencegahan
-   - 'Corrective' → perbaikan kerusakan
-   - 'Standby'    → siaga/standby
+   - 'Preventive' -> perawatan rutin/pencegahan
+   - 'Corrective' -> perbaikan kerusakan
+   - 'Standby'    -> siaga/standby
 
 10. SLA TERPENUHI (monitoring_ltsa.sla_terpenuhi):
-    - 'Yes' → SLA terpenuhi
-    - 'No'  → SLA tidak terpenuhi
+    - 'Yes' -> SLA terpenuhi
+    - 'No'  -> SLA tidak terpenuhi
 
 11. STATUS TAGIHAN (tagihan.status_tagihan) — mengikuti tahapan progress:
     Tahap 1: Punchlist
@@ -317,16 +317,16 @@ NILAI ENUM & PILIHAN YANG VALID:
     Tahap 8: Payment/Selesai
 
 12. STATUS PURCHASE PADI (padi.status_purchase):
-    - 'BAST' → Berita Acara Serah Terima sudah dilakukan
+    - 'BAST' -> Berita Acara Serah Terima sudah dilakukan
 """
-- vendor.id_vendor → kontrak.id_vendor (1 vendor banyak kontrak)
-- kontrak.id_kontrak → tagihan.id_kontrak
-- kontrak.id_kontrak → amandemen_kontrak.id_kontrak
-- kontrak.id_kontrak → progress_lumpsum.id_kontrak
-- kontrak.id_kontrak → progress_unit_price.id_kontrak
-- kontrak.id_kontrak → monitoring_ltsa.id_kontrak
-- kontrak.id_kontrak → dokumen_approval.id_kontrak
-- vendor.id_vendor → padi.id_vendor
+- vendor.id_vendor -> kontrak.id_vendor (1 vendor banyak kontrak)
+- kontrak.id_kontrak -> tagihan.id_kontrak
+- kontrak.id_kontrak -> amandemen_kontrak.id_kontrak
+- kontrak.id_kontrak -> progress_lumpsum.id_kontrak
+- kontrak.id_kontrak -> progress_unit_price.id_kontrak
+- kontrak.id_kontrak -> monitoring_ltsa.id_kontrak
+- kontrak.id_kontrak -> dokumen_approval.id_kontrak
+- vendor.id_vendor -> padi.id_vendor
 """
 
 BASE_SYSTEM_PROMPT = f"""Kamu adalah asisten cerdas untuk sistem manajemen kontrak kilang minyak.
@@ -342,10 +342,10 @@ ATURAN KETAT:
 5. Format angka nilai kontrak dalam format Indonesia (Rp)
 
 ATURAN INTERPRETASI ENTITAS:
-- Jika ada blok "KONTEKS ENTITAS YANG DITEMUKAN DI DATABASE" → gunakan langsung, JANGAN minta klarifikasi
-- Jika user menyebut nama yang diawali PT/CV/UD → cari di vendor.nama_vendor
-- Jika user menyebut kode seperti MA5, KOM-001, KTR-xxx → cari di direksi_pekerjaan atau no_dokumen_kontrak
-- Jika entitas tidak ditemukan di konteks → baru boleh minta klarifikasi
+- Jika ada blok "KONTEKS ENTITAS YANG DITEMUKAN DI DATABASE" -> gunakan langsung, JANGAN minta klarifikasi
+- Jika user menyebut nama yang diawali PT/CV/UD -> cari di vendor.nama_vendor
+- Jika user menyebut kode seperti MA5, KOM-001, KTR-xxx -> cari di direksi_pekerjaan atau no_dokumen_kontrak
+- Jika entitas tidak ditemukan di konteks -> baru boleh minta klarifikasi
 
 FORMAT RESPONS JSON:
 Kamu HARUS selalu merespons dalam format JSON seperti ini:
@@ -361,14 +361,14 @@ Kamu HARUS selalu merespons dalam format JSON seperti ini:
 }}
 
 DETEKSI CHART:
-- Jika pertanyaan menyebut "grafik", "chart", "trend", "perbandingan", "distribusi", "per bulan/tahun" → suggest chart
+- Jika pertanyaan menyebut "grafik", "chart", "trend", "perbandingan", "distribusi", "per bulan/tahun" -> suggest chart
 - bar chart: perbandingan kategori (status, tipe, vendor)
 - line chart: data time-series (per bulan, trend progress)
 - pie/doughnut: distribusi persentase (status kontrak, tipe)
 
 DETEKSI TABEL:
-- Jika hasil query berpotensi >5 baris dan multi-kolom → akan ditampilkan tabel
-- Jika hanya 1-2 nilai → tampilkan sebagai narasi saja
+- Jika hasil query berpotensi >5 baris dan multi-kolom -> akan ditampilkan tabel
+- Jika hanya 1-2 nilai -> tampilkan sebagai narasi saja
 """
 
 # ── Models ────────────────────────────────────────────────────────────────────
