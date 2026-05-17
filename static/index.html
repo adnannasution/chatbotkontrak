@@ -885,7 +885,7 @@ textarea#input::-webkit-scrollbar-thumb { background: var(--black5); }
 // ═══════════════════════════════════════════════════════════════
 //  CONFIG
 // ═══════════════════════════════════════════════════════════════
-let API_URL = localStorage.getItem('rcms_api_url') || 'https://chatbotkontrak-production.up.railway.app';
+let API_URL = window.location.origin;
 let conversationHistory = [];
 let chartInstances = {};
 let isLoading = false;
