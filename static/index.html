@@ -873,7 +873,7 @@ textarea#input::-webkit-scrollbar-thumb { background: var(--black5); }
   <div style="background:var(--black2); border:1px solid var(--black5); border-radius:var(--radius-lg); padding:28px; width:420px; max-width:90vw;">
     <h3 style="font-family:var(--font-display);font-size:16px;margin-bottom:20px;">Konfigurasi Backend</h3>
     <label style="display:block;font-family:var(--font-mono);font-size:10px;color:var(--grey3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">API URL Backend</label>
-    <input id="api-url-input" type="text" style="width:100%;background:var(--black3);border:1px solid var(--black5);color:var(--white);padding:9px 12px;border-radius:var(--radius);font-family:var(--font-mono);font-size:12px;outline:none;margin-bottom:16px;" placeholder="http://localhost:8000">
+    <input id="api-url-input" type="text" style="width:100%;background:var(--black3);border:1px solid var(--black5);color:var(--white);padding:9px 12px;border-radius:var(--radius);font-family:var(--font-mono);font-size:12px;outline:none;margin-bottom:16px;" placeholder="https://chatbotkontrak-production.up.railway.app">
     <div style="display:flex;gap:8px;justify-content:flex-end;">
       <button onclick="toggleSettings()" style="background:none;border:1px solid var(--black5);color:var(--grey4);padding:7px 14px;border-radius:var(--radius);cursor:pointer;font-size:12px;">Batal</button>
       <button onclick="saveSettings()" style="background:var(--white);color:var(--black);border:none;padding:7px 14px;border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:600;">Simpan</button>
@@ -885,7 +885,7 @@ textarea#input::-webkit-scrollbar-thumb { background: var(--black5); }
 // ═══════════════════════════════════════════════════════════════
 //  CONFIG
 // ═══════════════════════════════════════════════════════════════
-let API_URL = localStorage.getItem('rcms_api_url') || 'http://localhost:8000';
+let API_URL = localStorage.getItem('rcms_api_url') || 'https://chatbotkontrak-production.up.railway.app';
 let conversationHistory = [];
 let chartInstances = {};
 let isLoading = false;
