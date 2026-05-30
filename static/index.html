@@ -945,6 +945,45 @@ html, body, .main { background: #e7eaf6; }   /* halaman: ungu-abu lembut */
 
 /* (opsional) header "Data Hasil" dikasih sentuhan warna tema */
 .result-header { background: #f1f3fb; }
+
+
+/* ⬇️ Kolom chat ala Claude — kotak putih melayang, sudut membulat */
+.input-area {
+  background: transparent;
+  border-top: none;
+  padding: 16px 28px 24px;
+}
+
+.input-wrapper {
+  background: var(--white);
+  border: 1px solid var(--grey2);
+  border-radius: 24px;
+  padding: 14px 14px 14px 20px;
+  align-items: flex-end;
+  box-shadow: 0 2px 6px rgba(30,36,54,0.06),
+              0 10px 30px rgba(30,36,54,0.10);
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--blue);
+  background: var(--white);
+  box-shadow: 0 2px 6px rgba(30,36,54,0.06),
+              0 12px 34px rgba(37,99,235,0.16);
+}
+
+textarea#input { font-size: 15px; }
+
+.send-btn {
+  width: 40px; height: 40px;
+  border-radius: 14px;
+  background: var(--blue);
+  box-shadow: 0 4px 12px rgba(37,99,235,0.30);
+}
+.send-btn:hover { background: var(--blue-light); }
+
+/* ⬇️ ini yang kamu tanya — bikin kolomnya ramping & di tengah */
+.input-wrapper, .input-footer { max-width: 760px; margin-left: auto; margin-right: auto; }
+
 </style>
 </head>
 <body>
@@ -959,13 +998,13 @@ html, body, .main { background: #e7eaf6; }   /* halaman: ungu-abu lembut */
       <div class="header-left">
         <div class="header-avatar">⬡</div>
         <div>
-          <div class="header-greeting">Selamat datang 👋</div>
+          
           <div class="header-title">Contract Intelligence Query</div>
         </div>
       </div>
       <div class="header-actions">
         <button class="hdr-btn" onclick="clearChat()">Chat Baru</button>
-        <button class="hdr-btn" onclick="toggleSettings()">⚙ Config</button>
+        <!-- <button class="hdr-btn" onclick="toggleSettings()">⚙ Config</button> -->
       </div>
     </div>
 
