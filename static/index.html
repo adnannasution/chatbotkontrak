@@ -933,6 +933,18 @@ textarea#input::placeholder { color: var(--grey4); }
 .welcome-chip { cursor: pointer; border: 1px solid var(--sky2); }
 .welcome-chip:hover { background: var(--sky2); }
 
+/* ⬇️ Pisahkan warna background halaman dari kartu putih biar gak nyatu */
+html, body, .main { background: #e7eaf6; }   /* halaman: ungu-abu lembut */
+
+/* kartu hasil & welcome lebih "ngangkat" dari background */
+.result-container,
+.welcome-card {
+  box-shadow: 0 8px 24px rgba(30,36,54,0.12);
+  border: 1px solid var(--grey2);
+}
+
+/* (opsional) header "Data Hasil" dikasih sentuhan warna tema */
+.result-header { background: #f1f3fb; }
 </style>
 </head>
 <body>
