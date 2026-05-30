@@ -9,46 +9,45 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root {
-  --navy:       #1a2744;
-  --navy2:      #243058;
-  --navy3:      #2e3d6e;
-  --navy-light: #3b4f8a;
-  --blue:       #4169c8;
-  --blue-light: #5a80e0;
-  --sky:        #e8eef8;
-  --sky2:       #d4dff5;
-  --white:      #ffffff;
-  --grey1:      #f0f3fa;
-  --grey2:      #e2e8f4;
-  --grey3:      #b8c4d8;
-  --grey4:      #8896b0;
-  --grey5:      #5a6a88;
-  --text:       #1a2744;
-  --text2:      #3a4a6a;
-  --text3:      #5a6a88;
-  --green:      #22c55e;
-  --green-bg:   #f0fdf4;
-  --green-bdr:  #bbf7d0;
-  --amber:      #f59e0b;
-  --amber-bg:   #fffbeb;
-  --amber-bdr:  #fde68a;
-  --red:        #ef4444;
-  --red-bg:     #fef2f2;
-  --red-bdr:    #fecaca;
-  --purple:     #8b5cf6;
-  --purple-bg:  #f5f3ff;
-  --shadow-sm:  0 1px 3px rgba(26,39,68,0.08), 0 1px 2px rgba(26,39,68,0.04);
-  --shadow:     0 4px 16px rgba(26,39,68,0.10), 0 2px 6px rgba(26,39,68,0.06);
-  --shadow-lg:  0 12px 40px rgba(26,39,68,0.14), 0 4px 12px rgba(26,39,68,0.08);
-  --radius-sm:  8px;
-  --radius:     12px;
-  --radius-lg:  18px;
-  --radius-xl:  24px;
-  --font:       'Plus Jakarta Sans', sans-serif;
-  --font-mono:  'JetBrains Mono', monospace;
-  --trans:      all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
+  /* aksen gelap (rail/teks judul) — warna chip aktif di screenshot */
+  --navy:       #1f2640;
+  --navy2:      #2a3354;
+  --navy3:      #343f66;
+  --navy-light: #4b5a8c;
+  --blue:       #2563eb;   /* PRIMARY: tombol Tambah, Send, Save */
+  --blue-light: #3b82f6;
+  --sky:        #eef2ff;   /* tint pill biru muda */
+  --sky2:       #dbe4ff;
 
+  /* surface terang seperti screenshot */
+  --white:      #ffffff;
+  --grey1:      #eef1f7;   /* background halaman (abu sejuk) */
+  --grey2:      #e6e9f2;   /* border halus */
+  --grey3:      #c2c9da;
+  --grey4:      #8b93a8;
+  --grey5:      #5a6580;
+  --text:       #1e2436;
+  --text2:      #46506b;
+  --text3:      #8b93a8;
+
+  /* pill: Aktif=hijau, Lumpsum=ungu, dst */
+  --green:  #16a34a; --green-bg:#ecfdf5; --green-bdr:#bbf7d0;
+  --amber:  #d97706; --amber-bg:#fffbeb; --amber-bdr:#fde68a;
+  --red:    #ef4444; --red-bg:  #fef2f2; --red-bdr:  #fecaca;
+  --purple: #8b5cf6; --purple-bg:#f5f3ff;
+
+  /* GRADIEN KARTU indigo → ungu (ciri khas screenshot) */
+  --grad: linear-gradient(120deg, #4f63f0 0%, #7c5cf0 52%, #a855f7 100%);
+
+  /* shadow lebih flat/halus */
+  --shadow-sm: 0 1px 2px rgba(30,36,54,0.06);
+  --shadow:    0 4px 14px rgba(30,36,54,0.08);
+  --shadow-lg: 0 16px 40px rgba(30,36,54,0.16);
+  --radius-sm:8px; --radius:12px; --radius-lg:16px; --radius-xl:22px;
+  --font: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --trans: all 0.2s cubic-bezier(0.16,1,0.3,1);
+}
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
@@ -95,7 +94,7 @@ html, body {
 .logo-icon {
   width: 28px;
   height: 28px;
-  background: linear-gradient(135deg, var(--blue-light), var(--blue));
+  background: var(--grad);
   border-radius: 7px;
   display: flex;
   align-items: center;
@@ -206,7 +205,7 @@ html, body {
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--blue-light);
+  color: var(--purple);
   margin-bottom: 2px;
 }
 
@@ -279,7 +278,7 @@ html, body {
   width: 42px;
   height: 42px;
   border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, var(--navy), var(--navy3));
+  background: var(--grad);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -360,7 +359,7 @@ html, body {
 .welcome-icon {
   width: 72px;
   height: 72px;
-  background: linear-gradient(135deg, var(--navy), var(--navy3));
+  background: var(--grad);
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -434,7 +433,7 @@ html, body {
 }
 
 .msg.ai .msg-avatar {
-  background: linear-gradient(135deg, var(--navy), var(--navy3));
+  background: var(--grad);
   color: #fff;
   box-shadow: 0 4px 12px rgba(26,39,68,0.2);
 }
